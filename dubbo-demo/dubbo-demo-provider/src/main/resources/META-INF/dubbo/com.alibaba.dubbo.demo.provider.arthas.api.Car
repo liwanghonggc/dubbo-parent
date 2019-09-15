@@ -1,0 +1,6 @@
+red = com.alibaba.dubbo.demo.provider.arthas.impl.RedCar
+black = com.alibaba.dubbo.demo.provider.arthas.impl.BlackCar
+benz = com.alibaba.dubbo.demo.provider.arthas.impl.BenzCar
+com.alibaba.dubbo.demo.provider.arthas.impl.AdaptiveCar
+com.alibaba.dubbo.demo.provider.arthas.impl.CarWrapper
+com.alibaba.dubbo.demo.provider.arthas.impl.Car2Wrapper
