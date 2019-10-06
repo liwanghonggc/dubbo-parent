@@ -27,11 +27,7 @@ import com.alibaba.dubbo.rpc.cluster.loadbalance.RandomLoadBalance;
 import java.util.List;
 
 /**
- * LoadBalance. (SPI, Singleton, ThreadSafe)
- * <p>
- * <a href="http://en.wikipedia.org/wiki/Load_balancing_(computing)">Load-Balancing</a>
- *
- * @see com.alibaba.dubbo.rpc.cluster.Cluster#join(Directory)
+ * 该接口是负载均衡的接口,dubbo也提供了四种负载均衡策略
  */
 @SPI(RandomLoadBalance.NAME)
 public interface LoadBalance {

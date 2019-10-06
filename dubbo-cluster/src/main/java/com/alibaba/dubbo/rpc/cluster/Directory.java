@@ -24,25 +24,18 @@ import com.alibaba.dubbo.rpc.RpcException;
 import java.util.List;
 
 /**
- * Directory. (SPI, Prototype, ThreadSafe)
- * <p>
- * <a href="http://en.wikipedia.org/wiki/Directory_service">Directory Service</a>
- *
- * @see com.alibaba.dubbo.rpc.cluster.Cluster#join(Directory)
+ * 该接口是目录接口,Directory 代表了多个Invoker,并且它的值会随着注册中心的服务变更推送而变化.
+ * 一个服务类型对应一个Directory
  */
 public interface Directory<T> extends Node {
 
     /**
-     * get service type.
-     *
-     * @return service type.
+     * 获得服务类型
      */
     Class<T> getInterface();
 
     /**
-     * list invokers.
-     *
-     * @return invokers
+     * 获得所有服务Invoker集合
      */
     List<Invoker<T>> list(Invocation invocation) throws RpcException;
 

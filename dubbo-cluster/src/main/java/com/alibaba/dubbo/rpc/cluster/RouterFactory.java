@@ -21,21 +21,13 @@ import com.alibaba.dubbo.common.extension.Adaptive;
 import com.alibaba.dubbo.common.extension.SPI;
 
 /**
- * RouterFactory. (SPI, Singleton, ThreadSafe)
- * <p>
- * <a href="http://en.wikipedia.org/wiki/Routing">Routing</a>
- *
- * @see Cluster#join(Directory)
- * @see Directory#list(com.alibaba.dubbo.rpc.Invocation)
+ * 该接口是路由工厂接口,定义了获得路由实例的方法
  */
 @SPI
 public interface RouterFactory {
 
     /**
-     * Create router.
-     *
-     * @param url
-     * @return router
+     * 创建路由
      */
     @Adaptive("protocol")
     Router getRouter(URL url);

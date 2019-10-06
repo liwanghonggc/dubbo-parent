@@ -55,7 +55,7 @@ import java.util.Set;
 
 /**
  * RegistryDirectory
- *
+ * 该类继承了AbstractDirectory类,是基于注册中心的动态Directory实现类,会根据注册中心的推送变更List<Invoker>
  */
 public class RegistryDirectory<T> extends AbstractDirectory<T> implements NotifyListener {
 

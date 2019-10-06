@@ -21,8 +21,8 @@ import com.alibaba.dubbo.common.extension.Adaptive;
 import com.alibaba.dubbo.common.extension.SPI;
 
 /**
- * ConfiguratorFactory. (SPI, Singleton, ThreadSafe)
- *
+ * 该接口是Configurator的工厂接口,定义了一个getConfigurator方法来获得
+ * Configurator实例,比较好理解
  */
 @SPI
 public interface ConfiguratorFactory {

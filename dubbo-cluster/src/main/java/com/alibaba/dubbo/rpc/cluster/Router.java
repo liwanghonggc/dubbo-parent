@@ -34,20 +34,12 @@ import java.util.List;
 public interface Router extends Comparable<Router> {
 
     /**
-     * get the router url.
-     *
-     * @return url
+     * 获得路由规则的url
      */
     URL getUrl();
 
     /**
-     * route.
-     *
-     * @param invokers
-     * @param url        refer url
-     * @param invocation
-     * @return routed invokers
-     * @throws RpcException
+     * 筛选出跟规则匹配的Invoker集合
      */
     <T> List<Invoker<T>> route(List<Invoker<T>> invokers, URL url, Invocation invocation) throws RpcException;
 
