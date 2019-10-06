@@ -74,6 +74,9 @@ public abstract class AbstractDirectory<T> implements Directory<T> {
         setRouters(routers);
     }
 
+    /**
+     * 该方法是生成invoker集合的逻辑实现,其中doList是抽象方法,交由子类来实现
+     */
     @Override
     public List<Invoker<T>> list(Invocation invocation) throws RpcException {
         // 如果销毁则抛出异常

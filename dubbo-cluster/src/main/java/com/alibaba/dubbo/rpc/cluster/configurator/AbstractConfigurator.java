@@ -27,6 +27,10 @@ import java.util.Set;
 
 /**
  * AbstractOverrideConfigurator
+ * 向注册中心写入动态配置覆盖规则,该功能通常由监控中心或治理中心的页面完成.
+ * 在最新的2.7.0版本中有新的配置规则,我会在后续讲解2.7.0新特性的时候提到. 这里还是根据旧版本中配置规则来讲解
+ * 
+ * 该类实现了Configurator接口,是配置规则抽象类,配置有两种方式,一种是没有时添加配置,这种暂时没有用到,另一种是覆盖配置
  *
  */
 public abstract class AbstractConfigurator implements Configurator {
@@ -55,14 +59,19 @@ public abstract class AbstractConfigurator implements Configurator {
                 || url == null || url.getHost() == null) {
             return url;
         }
-        // If override url has port, means it is a provider address. We want to control a specific provider with this override url, it may take effect on the specific provider instance or on consumers holding this provider instance.
+        // If override url has port, means it is a provider address. 
+        // We want to control a specific provider with this override url, 
+        // it may take effect on the specific provider instance or on consumers holding this provider instance.
+        // 如果覆盖url具有端口,则表示它是提供者地址. 我们希望使用此覆盖URL控制特定提供程序,它可以在提供端生效也可以在消费端生效。
         if (configuratorUrl.getPort() != 0) {
             if (url.getPort() == configuratorUrl.getPort()) {
                 return configureIfMatch(url.getHost(), url);
             }
-        } else {// override url don't have a port, means the ip override url specify is a consumer address or 0.0.0.0
+        } else {
+            // override url don't have a port, means the ip override url specify is a consumer address or 0.0.0.0
             // 1.If it is a consumer ip address, the intention is to control a specific consumer instance, it must takes effect at the consumer side, any provider received this override url should ignore;
             // 2.If the ip is 0.0.0.0, this override url can be used on consumer, and also can be used on provider
+            // 配置规则,URL没有端口,意味着override输入消费端地址或者0.0.0.0
             if (url.getParameter(Constants.SIDE_KEY, Constants.PROVIDER).equals(Constants.CONSUMER)) {
                 return configureIfMatch(NetUtils.getLocalHost(), url);// NetUtils.getLocalHost is the ip address consumer registered to registry.
             } else if (url.getParameter(Constants.SIDE_KEY, Constants.CONSUMER).equals(Constants.PROVIDER)) {
