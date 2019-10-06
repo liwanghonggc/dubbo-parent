@@ -32,6 +32,10 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getProxy(Invoker<T> invoker, Class<?>[] interfaces) {
+        // 生成Proxy子类(Proxy是抽象类),并调用Proxy子类的newInstance方法创建Proxy实例
+        // 首先是通过Proxy的getProxy方法获取Proxy子类,然后创建InvokerInvocationHandler
+        // 对象,并将该对象传给newInstance生成Proxy实例. InvokerInvocationHandler实现自
+        // JDK的InvocationHandler接口,具体的用途是拦截接口类调用
         return (T) Proxy.getProxy(interfaces).newInstance(new InvokerInvocationHandler(invoker));
     }
 

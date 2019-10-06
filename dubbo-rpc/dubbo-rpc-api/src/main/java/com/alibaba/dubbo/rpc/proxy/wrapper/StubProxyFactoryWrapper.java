@@ -63,7 +63,10 @@ public class StubProxyFactoryWrapper implements ProxyFactory {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public <T> T getProxy(Invoker<T> invoker) throws RpcException {
         T proxy = proxyFactory.getProxy(invoker);
+
+        // 如果是非泛化
         if (GenericService.class != invoker.getInterface()) {
+            // 处理本地存根
             String stub = invoker.getUrl().getParameter(Constants.STUB_KEY, invoker.getUrl().getParameter(Constants.LOCAL_KEY));
             if (ConfigUtils.isNotEmpty(stub)) {
                 Class<?> serviceType = invoker.getInterface();

@@ -33,6 +33,9 @@ public class MockClusterWrapper implements Cluster {
         this.cluster = cluster;
     }
 
+    /**
+     * 它是一个Wrapper类,对其他如FailoverCluster包装了一层
+     */
     @Override
     public <T> Invoker<T> join(Directory<T> directory) throws RpcException {
         return new MockClusterInvoker<T>(directory,

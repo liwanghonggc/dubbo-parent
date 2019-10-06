@@ -61,6 +61,10 @@ public class ReferenceBean<T> extends ReferenceConfig<T> implements FactoryBean,
         SpringExtensionFactory.addApplicationContext(applicationContext);
     }
 
+    /**
+     * 整个分析过程从ReferenceBean的getObject方法开始.当我们的服务被注入到其他类中时,
+     * Spring会第一时间调用getObject方法,并由该方法执行服务引用逻辑
+     */
     @Override
     public Object getObject() throws Exception {
         return get();
@@ -168,6 +172,11 @@ public class ReferenceBean<T> extends ReferenceConfig<T> implements FactoryBean,
                 }
             }
         }
+        
+        // Dubbo服务引用的时机有两个,第一个是在Spring容器调用ReferenceBean的afterPropertiesSet
+        // 方法时引用服务,第二个是在ReferenceBean对应的服务被注入到其他类中时引用.这两个引用服务的时机
+        // 区别在于,第一个是饿汉式的,第二个是懒汉式的.默认情况下,Dubbo使用懒汉式引用服务.如果需要使用
+        // 饿汉式,可通过配置<dubbo:reference>的init属性开启.
         Boolean b = isInit();
         if (b == null && getConsumer() != null) {
             b = getConsumer().isInit();
