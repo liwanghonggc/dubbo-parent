@@ -186,13 +186,20 @@ public class ExtensionLoader<T> {
      */
     public List<T> getActivateExtension(URL url, String[] values, String group) {
         List<T> exts = new ArrayList<T>();
+        // 将传递进来的values包装成List类型的names
         List<String> names = values == null ? new ArrayList<String>(0) : Arrays.asList(values);
+        // 包装好的数据中不含"-default"
         if (!names.contains(Constants.REMOVE_VALUE_PREFIX + Constants.DEFAULT_KEY)) {
+            // 获取这个类型的数据的所有扩展信息
             getExtensionClasses();
             for (Map.Entry<String, Activate> entry : cachedActivates.entrySet()) {
+                // 获取拓展的名称,在配置文件中配置的key=value中的key值
                 String name = entry.getKey();
+                // 获取注解
                 Activate activate = entry.getValue();
+                // 判断group是否匹配,group是程序传进来的值,如果没有设定则返回true表示匹配,如果设定了需要进行比较匹配
                 if (isMatchGroup(group, activate.group())) {
+                    // 获取key值即name对应的实例
                     T ext = getExtension(name);
                     if (!names.contains(name)
                             && !names.contains(Constants.REMOVE_VALUE_PREFIX + name)
@@ -201,6 +208,7 @@ public class ExtensionLoader<T> {
                     }
                 }
             }
+            // 排序
             Collections.sort(exts, ActivateComparator.COMPARATOR);
         }
         List<T> usrs = new ArrayList<T>();
@@ -209,11 +217,13 @@ public class ExtensionLoader<T> {
             if (!name.startsWith(Constants.REMOVE_VALUE_PREFIX)
                     && !names.contains(Constants.REMOVE_VALUE_PREFIX + name)) {
                 if (Constants.DEFAULT_KEY.equals(name)) {
+                    // 如果name是default,就将usrs加入exts头部并清空usrs
                     if (!usrs.isEmpty()) {
                         exts.addAll(0, usrs);
                         usrs.clear();
                     }
                 } else {
+                    // 获取name对应的拓展并加入usrs
                     T ext = getExtension(name);
                     usrs.add(ext);
                 }
